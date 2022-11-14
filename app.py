@@ -50,7 +50,7 @@ def fetch_coordinates(mhc_class, pdb_code, assembly_id, coordinates_type, solven
 
 
 
-@app.route('/view/<string:mhc_class>/<string:solvent>/<string:pdb_code>_<string:assembly_id>_<string:coordinates_type>.<string:format>')
+@app.route('/structures/view/<string:mhc_class>/<string:solvent>/<string:pdb_code>_<string:assembly_id>_<string:coordinates_type>.<string:format>')
 def coordinates_view(mhc_class, solvent, pdb_code, assembly_id, coordinates_type, format):
     coordinates, success, error = fetch_coordinates(mhc_class, pdb_code, assembly_id, coordinates_type, solvent, format)
     if success:
@@ -63,13 +63,14 @@ def coordinates_view(mhc_class, solvent, pdb_code, assembly_id, coordinates_type
 
 
 
-@app.route('/download/<string:mhc_class>/<string:solvent>/<string:pdb_code>_<string:assembly_id>_<string:coordinates_type>.<string:format>')
-def coordinates_download(mhc_class, solvent, pdb_code, assembly_id, coordinates_type, format):
+@app.route('/structures/<string:action>/<string:mhc_class>/<string:solvent>/<string:pdb_code>_<string:assembly_id>_<string:coordinates_type>.<string:format>')
+def coordinates_download(action, mhc_class, solvent, pdb_code, assembly_id, coordinates_type, format):
     coordinates, success, error = fetch_coordinates(mhc_class, pdb_code, assembly_id, coordinates_type, solvent, format)
     if success:
         file_name = f'{pdb_code}_{assembly_id}_{coordinates_type}.{format}'
-        plausible = plausibleProvider('histo.fyi')    
-        plausible.data_download(file_name, coordinates_type, pdb_code)
+        plausible = plausibleProvider('histo.fyi')
+        # TODO make an action which will distinguish coordinate downloads (action = download) and coordinates loaded into PyMol (action = load)
+        plausible.structure_download(file_name, coordinates_type, pdb_code)
         return Response(coordinates,
                         mimetype="text/plain",
                         headers={"Content-disposition": f"attachment; filename={file_name}"})
@@ -78,4 +79,7 @@ def coordinates_download(mhc_class, solvent, pdb_code, assembly_id, coordinates_
         response = make_response('The requested file could not be found', 404)
         response.mimetype = "text/plain"
         return response
+
+
+
 
