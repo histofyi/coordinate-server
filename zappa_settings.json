@@ -1,0 +1,11 @@
+{
+    "production": {
+        "app_function": "app.app",
+        "aws_region": "eu-west-2",
+        "profile_name": "default",
+        "project_name": "coordinate-serv",
+        "runtime": "python3.9",
+        "s3_bucket": "coordinate-server",
+        "cors":true
+    }
+}
