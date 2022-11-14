@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# config and secrets
+config.toml
+
+#OSX
+.DS_Store
