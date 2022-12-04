@@ -9,40 +9,6 @@ import json
 import logging
 
 
-
-
-class localClient():
-
-    def __init__(self, basedir):
-        self.basedir = basedir
-
-
-    def create_file_handle(self, bucket, key):
-        file_handle = f'{self.basedir}/{bucket}/{key}'
-        return file_handle
-
-
-    def get_object(self, Bucket='test', Key='test'):
-        file_handle = self.create_file_handle(Bucket, Key)
-        file_type = Key.rsplit('.', 1)[1]
-        data, success, errors = self.fs.get(None, format=file_type, fullpath=file_handle)
-        if success:
-            try:
-                data = json.dumps(data)
-            except:
-                data = data
-        return data
-
-
-    def put_object(self, Body=None, Bucket=None, Key=None):
-        file_handle = self.create_file_handle(Bucket, Key)
-        path = file_handle.rsplit('/', 1)[0]
-        file_type = Key.rsplit('.', 1)[1]
-        os.makedirs(path, exist_ok=True)
-        data, success, errors = self.fs.put(None, Body, fullpath=file_handle, format=file_type)
-        pass
-
-
 class s3Provider():
 
     client = None

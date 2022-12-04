@@ -42,6 +42,10 @@ CORS(app)
 
 
 def fetch_coordinates(mhc_class, pdb_code, assembly_id, coordinates_type, solvent, format):
+    if coordinates_type == 'abd':
+        coordinates_type = 'antigen_binding_domains'
+    elif coordinates_type == 'alpha':
+        coordinates_type = 'alpha_chains'
     s3 = s3Provider(app.config['AWS_CONFIG'])
     key = awsKeyProvider().coordinates_file_key(mhc_class, pdb_code, assembly_id, coordinates_type, solvent, format)
     coordinates, success, error = s3.get(key, 'txt')

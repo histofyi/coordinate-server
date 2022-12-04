@@ -15,4 +15,5 @@ class awsKeyProvider():
         Returns:
             str : the S3 key for the object
         """
-        return f'files/{privacy.lower()}/{mhc_class.lower()}/{solvent.lower()}/{coordinates_type.lower()}/{pdb_code.lower()}_{assembly_id}.{format.lower()}'
+        key = f'files/{privacy.lower()}/{mhc_class.lower()}/{solvent.lower()}/{coordinates_type.lower()}/{pdb_code.lower()}_{assembly_id}.{format.lower()}'
+        return key
