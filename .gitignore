@@ -133,3 +133,6 @@ config.toml
 
 #OSX
 .DS_Store
+
+#zappa deploy zips
+*.zip
